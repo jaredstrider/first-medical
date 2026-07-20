@@ -81,7 +81,7 @@ export default function Patients() {
                 {filtered.map((p) => (
                   <tr key={p.id} className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-2.5 pr-4">
-                      <Link to={`/patients/${p.id}`} className="font-medium text-teal-700 hover:underline">
+                      <Link to={`/patients/${p.id}`} className="font-medium text-brand-700 hover:underline">
                         {p.first_name} {p.last_name}
                       </Link>
                       {p.patient_ref && <span className="ml-2 text-xs text-slate-400">{p.patient_ref}</span>}

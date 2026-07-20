@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
 import { btnPrimary } from '../lib/ui'
+import logo from '../assets/first-medical-logo.jpg'
 
 export default function Login() {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin')
@@ -36,11 +37,10 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-teal-700 to-slate-900 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-petrol-900 to-slate-900 p-4">
       <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl">
         <div className="mb-6 text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-600 text-xl font-bold text-white">F</div>
-          <h1 className="text-xl font-bold">First Medical</h1>
+          <img src={logo} alt="First Medical Company" className="mx-auto mb-3 w-52" />
           <p className="text-sm text-slate-500">Patient Follow-Up & Tube Change Tracking</p>
         </div>
         <form onSubmit={submit} className="space-y-3">
@@ -66,7 +66,7 @@ export default function Login() {
         </form>
         <button
           onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setError(''); setInfo('') }}
-          className="mt-4 w-full cursor-pointer text-center text-sm text-teal-600 hover:underline"
+          className="mt-4 w-full cursor-pointer text-center text-sm text-brand-600 hover:underline"
         >
           {mode === 'signin' ? 'New user? Create an account' : 'Already registered? Sign in'}
         </button>

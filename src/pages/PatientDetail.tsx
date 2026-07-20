@@ -257,7 +257,7 @@ export default function PatientDetail() {
           <ul className="space-y-2">
             {docs.map((d) => (
               <li key={d.id} className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2 text-sm">
-                <button onClick={() => openDoc(d)} className="cursor-pointer text-left font-medium text-teal-700 hover:underline">
+                <button onClick={() => openDoc(d)} className="cursor-pointer text-left font-medium text-brand-700 hover:underline">
                   {d.name}
                 </button>
                 <span className="text-xs text-slate-400">{docTypeLabels[d.doc_type]} · {formatDate(d.created_at)}</span>

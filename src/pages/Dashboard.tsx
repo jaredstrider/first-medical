@@ -53,7 +53,7 @@ export default function Dashboard() {
     { label: 'Overdue', count: buckets.overdue.length, color: 'text-rose-600', ring: 'border-rose-200 bg-rose-50' },
     { label: 'Due in 14 days', count: buckets.due_soon.length, color: 'text-amber-600', ring: 'border-amber-200 bg-amber-50' },
     { label: 'Upcoming (30 days)', count: buckets.upcoming.length, color: 'text-sky-600', ring: 'border-sky-200 bg-sky-50' },
-    { label: 'Active patients', count: filtered.length, color: 'text-teal-700', ring: 'border-teal-200 bg-teal-50' },
+    { label: 'Active patients', count: filtered.length, color: 'text-petrol-900', ring: 'border-petrol-900/20 bg-petrol-900/5' },
   ]
 
   const attention = [...buckets.overdue, ...buckets.due_soon, ...buckets.upcoming]
@@ -110,7 +110,7 @@ export default function Dashboard() {
                 {attention.map((p) => (
                   <tr key={p.id} className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-2.5 pr-4">
-                      <Link to={`/patients/${p.id}`} className="font-medium text-teal-700 hover:underline">
+                      <Link to={`/patients/${p.id}`} className="font-medium text-brand-700 hover:underline">
                         {p.first_name} {p.last_name}
                       </Link>
                     </td>
