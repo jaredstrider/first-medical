@@ -58,10 +58,7 @@ npm run dev
 `.env.local` holds the Supabase URL and publishable key (safe to expose;
 row-level security is the real gate).
 
-Test accounts (demo data, password `FirstMed2026!`):
-
-- `admin@firstmedical.test` (admin)
-- `cf@firstmedical.test` (CF, Pretoria region)
+Test account credentials are shared separately (not stored in this repo).
 
 ## Deploying
 
