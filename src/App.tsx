@@ -6,6 +6,8 @@ import Dashboard from './pages/Dashboard'
 import Patients from './pages/Patients'
 import PatientForm from './pages/PatientForm'
 import PatientDetail from './pages/PatientDetail'
+import Library from './pages/Library'
+import CalendarSync from './pages/CalendarSync'
 import Admin from './pages/Admin'
 
 function Shell() {
@@ -19,6 +21,8 @@ function Shell() {
         <Route path="patients" element={<Patients />} />
         <Route path="patients/new" element={<PatientForm />} />
         <Route path="patients/:id" element={<PatientDetail />} />
+        <Route path="library" element={<Library />} />
+        <Route path="calendar-sync" element={<CalendarSync />} />
         {profile?.role === 'admin' && <Route path="admin" element={<Admin />} />}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
