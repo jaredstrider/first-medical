@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import { flushOutbox } from '../lib/offline'
+import { useTour } from '../tour/Tour'
 import OfflineBar from './OfflineBar'
 import type { Notification } from '../lib/types'
 import logo from '../assets/first-medical-logo.jpg'
@@ -11,6 +12,7 @@ const roleLabels: Record<string, string> = { cf: 'Clinical Facilitator', admin: 
 
 export default function Layout() {
   const { profile, signOut } = useAuth()
+  const { startTour } = useTour()
   const navigate = useNavigate()
   const [notifs, setNotifs] = useState<Notification[]>([])
   const [showNotifs, setShowNotifs] = useState(false)
@@ -67,6 +69,7 @@ export default function Layout() {
                 onClick={() => { setShowNotifs(!showNotifs); setShowMenu(false) }}
                 className="relative cursor-pointer rounded-lg p-2 text-slate-500 hover:bg-slate-100"
                 title="Notifications"
+                data-tour="bell"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0" />
@@ -111,6 +114,7 @@ export default function Layout() {
               <button
                 onClick={() => { setShowMenu(!showMenu); setShowNotifs(false) }}
                 className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 hover:bg-slate-100"
+                data-tour="user-menu"
               >
                 <div className="hidden text-right leading-tight sm:block">
                   <div className="text-sm font-medium">{profile?.full_name}</div>
@@ -130,6 +134,12 @@ export default function Layout() {
                     className="block w-full cursor-pointer px-4 py-2 text-left text-sm hover:bg-slate-50"
                   >
                     Add to my Google Calendar
+                  </button>
+                  <button
+                    onClick={() => { setShowMenu(false); startTour() }}
+                    className="block w-full cursor-pointer px-4 py-2 text-left text-sm hover:bg-slate-50"
+                  >
+                    Show me around
                   </button>
                   <button
                     onClick={() => { setShowMenu(false); signOut() }}

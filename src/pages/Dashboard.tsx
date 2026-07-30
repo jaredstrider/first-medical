@@ -109,7 +109,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4" data-tour="stats">
         {stats.map((s) => (
           <div key={s.label} className={`rounded-xl border p-4 ${s.ring}`}>
             <div className={`text-3xl font-bold ${s.color}`}>{s.count}</div>
@@ -119,9 +119,11 @@ export default function Dashboard() {
       </div>
 
       <div className="grid gap-5 lg:grid-cols-2">
-        <CalendarPanel patients={filtered} tasks={tasks} />
+        <div data-tour="calendar">
+          <CalendarPanel patients={filtered} tasks={tasks} />
+        </div>
 
-        <div className={card}>
+        <div className={card} data-tour="mytasks">
           <h2 className="mb-3 font-semibold">My tasks</h2>
           {myTasks.length === 0 && <p className="py-4 text-center text-sm text-slate-400">No open tasks. Add them from a patient’s Tasks tab.</p>}
           <ul className="space-y-1.5">
@@ -186,7 +188,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div className={card}>
+      <div className={card} data-tour="attention">
         <h2 className="mb-3 font-semibold">Needs attention</h2>
         {loading && <p className="py-6 text-center text-sm text-slate-400">Loading…</p>}
         {!loading && attention.length === 0 && (

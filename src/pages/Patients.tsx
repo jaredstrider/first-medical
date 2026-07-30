@@ -46,6 +46,7 @@ export default function Patients() {
   const tab = (key: typeof view, label: string, count?: number) => (
     <button
       key={key}
+      data-tour={key === 'steal' ? 'steal-tab' : undefined}
       onClick={() => setView(key)}
       className={`cursor-pointer rounded-lg px-3 py-1.5 text-sm font-medium ${
         view === key ? 'bg-brand-600 text-white' : 'text-slate-600 hover:bg-slate-100'
@@ -61,7 +62,7 @@ export default function Patients() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold">Patients</h1>
         {profile?.role !== 'rep' && (
-          <button onClick={() => navigate('/patients/new')} className={btnPrimary}>
+          <button onClick={() => navigate('/patients/new')} className={btnPrimary} data-tour="new-patient">
             + New patient
           </button>
         )}
@@ -79,6 +80,7 @@ export default function Patients() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="!w-80"
+          data-tour="patient-search"
         />
         {view === 'live' && (
           <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="!w-auto">

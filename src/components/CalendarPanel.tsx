@@ -68,36 +68,65 @@ export default function CalendarPanel({ patients, tasks }: { patients: Patient[]
           const inMonth = new Date(day + 'T00:00:00').getMonth() === month
           const isToday = day === today
           const isSel = day === selected
-          const total = (items?.changes.length ?? 0) + (items?.steals.length ?? 0) + (items?.tasks.length ?? 0)
+          const changes = items?.changes.length ?? 0
+          const steals = items?.steals.length ?? 0
+          const tasks = items?.tasks.length ?? 0
+          const total = changes + steals + tasks
+
+          // the whole day block is coloured by the most important thing on it:
+          // tube changes (red) beat steal windows (violet) beat tasks (blue)
+          let tone = 'border-transparent hover:bg-slate-50'
+          let numTone = 'text-slate-600'
+          if (changes > 0) {
+            tone = 'border-brand-300 bg-brand-100 hover:bg-brand-200'
+            numTone = 'font-bold text-brand-800'
+          } else if (steals > 0) {
+            tone = 'border-violet-300 bg-violet-100 hover:bg-violet-200'
+            numTone = 'font-bold text-violet-800'
+          } else if (tasks > 0) {
+            tone = 'border-sky-300 bg-sky-100 hover:bg-sky-200'
+            numTone = 'font-bold text-sky-800'
+          }
+
           return (
             <button
               key={day}
               onClick={() => setSelected(day)}
-              className={`cursor-pointer rounded-lg border p-1 text-left transition-colors ${
-                isSel ? 'border-brand-600 bg-brand-50'
-                : isToday ? 'border-petrol-900/40 bg-slate-50'
-                : 'border-transparent hover:bg-slate-50'
-              } ${inMonth ? '' : 'opacity-40'}`}
+              className={`cursor-pointer rounded-lg border p-1 pb-1.5 text-left transition-colors ${tone} ${
+                isSel ? 'ring-2 ring-petrol-900 ring-offset-1' : ''
+              } ${inMonth ? '' : 'opacity-35'}`}
             >
-              <div className={`text-xs ${isToday ? 'font-bold text-petrol-900' : 'text-slate-600'}`}>
-                {parseInt(day.slice(8), 10)}
+              <div className="flex items-start justify-between">
+                <span className={`text-xs ${numTone} ${isToday ? 'rounded bg-petrol-900 px-1 text-white' : ''}`}>
+                  {parseInt(day.slice(8), 10)}
+                </span>
+                {total > 0 && (
+                  <span className={`min-w-4 rounded-full px-1 text-center text-[10px] font-bold text-white ${
+                    changes > 0 ? 'bg-brand-600' : steals > 0 ? 'bg-violet-600' : 'bg-sky-500'
+                  }`}>
+                    {total}
+                  </span>
+                )}
               </div>
-              <div className="mt-0.5 flex h-3 flex-wrap gap-0.5">
-                {items?.changes.slice(0, 3).map((p) => <span key={p.id} className="h-1.5 w-1.5 rounded-full bg-brand-600" />)}
-                {items?.steals.slice(0, 3).map((p) => <span key={p.id} className="h-1.5 w-1.5 rounded-full bg-violet-600" />)}
-                {items?.tasks.slice(0, 3).map((t) => <span key={t.id} className="h-1.5 w-1.5 rounded-full bg-sky-500" />)}
-                {total > 9 && <span className="text-[9px] text-slate-400">+</span>}
+              <div className="mt-0.5 flex h-2 flex-wrap items-center gap-0.5">
+                {/* small dots show the other kinds of work also on this day */}
+                {changes > 0 && (steals > 0 || tasks > 0) && <span className="h-1.5 w-1.5 rounded-full bg-brand-600" />}
+                {steals > 0 && (changes > 0 || tasks > 0) && <span className="h-1.5 w-1.5 rounded-full bg-violet-600" />}
+                {tasks > 0 && (changes > 0 || steals > 0) && <span className="h-1.5 w-1.5 rounded-full bg-sky-500" />}
               </div>
             </button>
           )
         })}
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-3 border-t border-slate-100 pt-2 text-[11px] text-slate-500">
-        <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-brand-600" /> Tube change due</span>
-        <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-violet-600" /> Steal target window</span>
-        <span className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-sky-500" /> Task</span>
+      <div className="mt-3 flex flex-wrap gap-2 border-t border-slate-100 pt-2 text-[11px]">
+        <span className="rounded-full border border-brand-300 bg-brand-100 px-2 py-0.5 font-medium text-brand-800">Red day = tube change due</span>
+        <span className="rounded-full border border-violet-300 bg-violet-100 px-2 py-0.5 font-medium text-violet-800">Violet day = steal window</span>
+        <span className="rounded-full border border-sky-300 bg-sky-100 px-2 py-0.5 font-medium text-sky-800">Blue day = task due</span>
       </div>
+      <p className="mt-2 text-xs text-slate-500">
+        Tap any coloured day to see exactly what is due, listed below.
+      </p>
 
       <div className="mt-3 border-t border-slate-100 pt-3">
         <h3 className="mb-2 text-sm font-semibold">

@@ -48,6 +48,7 @@ export interface Profile {
   phone: string | null
   active: boolean
   calendar_token?: string
+  onboarded_at?: string | null
   region?: Region | null
 }
 

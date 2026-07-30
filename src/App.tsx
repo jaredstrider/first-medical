@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { TourProvider } from './tour/Tour'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
@@ -16,7 +17,7 @@ function Shell() {
   if (!session) return <Login />
   return (
     <Routes>
-      <Route element={<Layout />}>
+      <Route element={<TourProvider><Layout /></TourProvider>}>
         <Route index element={<Dashboard />} />
         <Route path="patients" element={<Patients />} />
         <Route path="patients/new" element={<PatientForm />} />
